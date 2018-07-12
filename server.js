@@ -7,7 +7,7 @@ var http = require('http');
 
 var server = http.createServer(function(req, res) {
   res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('Hi everybo!');
+  res.end('Hi everybody!');
   res.end('AAAAa');
   res.end(query);
   console.log(mydata[0]);
@@ -16,6 +16,10 @@ var server = http.createServer(function(req, res) {
 
 server.listen(8080);
 
+server.on('request', function(req,res) {
+  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+  res.write('<h2> Olá mundo! </h2>');
+});
 
 var mydata = dps.client()
   .query(query)
