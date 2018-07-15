@@ -6,7 +6,7 @@ const safeString = require('safe-string')
 const app = express()
 
 const dps = require('dbpedia-sparql-client').default;// npm install dbpedia-sparql-client
-const query = 'SELECT ?animal str(?nome) as ?Nome str(?ordem_label) as ?Ordem ?status ?data_extincao WHERE { ?animal dbo:class dbr:Mammal ; foaf:name ?nome ; dbo:order ?ordem . ?animal dbo:conservationStatus ?status . FILTER ((?ordem = dbr:Rodent) || (?ordem = dbr:Carnivora)) ?ordem rdfs:label ?ordem_label FILTER ( langMatches(lang(?ordem_label),"pt") ) FILTER ( (?status = "EX") || (?status = "EW") || (?status = "PE") || (?status = "PEW") || (?status = "CR") || (?status = "EN") || (?status = "VU") ) OPTIONAL { ?animal dbp:extinct ?data_extincao . } } ORDER BY ?status LIMIT 10';
+const query = 'select * WHERE { ?animal dbo:kingdom dbr:Animal ; foaf:name ?nome ;rdfs:label ?label;dbo:abstract ?abstract;rdfs:comment ?comment;foaf:isPrimaryTopicOf ?link_wikipedia;dbo:thumbnail ?thumbnail filter(lang(?label) = "pt" && lang(?abstract) = "pt" && lang(?comment) = "pt") } limit 100';
 
 app.engine('.hbs', exphbs({
   defaultLayout: 'main',
@@ -31,17 +31,9 @@ app.get('/busca', (request, response) => {
     .then(function(r) {
       /* handle success */
       console.log("Sucesso");
-      // mydata = r;
-      // return r;
-      // console.log(r["results"]["bindings"]);
-      // console.log(r["results"]["bindings"].length + " entradas encontradas.");
-      // console.log(mydata);
-      // console.log(JSON.stringify(r));
-      // console.log(safeString(JSON.stringify(r)));
       response.render('home', {
         name: "batata",
-        // busca: JSON.stringify(mydata)//, null, 2)
-        busca: JSON.stringify(r) 
+        busca: JSON.stringify(r)
       })
     })
     .catch(function(e) {
