@@ -5,7 +5,8 @@ const exphbs = require('express-handlebars')
 const app = express()
 
 const dps = require('dbpedia-sparql-client').default;// npm install dbpedia-sparql-client
-const query = 'select * WHERE { ?animal dbo:kingdom dbr:Animal ; foaf:name ?nome ;rdfs:label ?label;dbo:abstract ?abstract;rdfs:comment ?comment;foaf:isPrimaryTopicOf ?link_wikipedia;dbo:thumbnail ?thumbnail filter(lang(?label) = "pt" && lang(?abstract) = "pt" && lang(?comment) = "pt") } limit 100';
+const query = 'select distinct * where { ?animal dbo:kingdom dbr:Animal; dbo:phylum ?filo ; dbo:class ?classe; foaf:name ?nome ; rdfs:label ?label; dbo:abstract ?abstract; rdfs:comment ?comment; foaf:isPrimaryTopicOf ?link_wikipedia; dbo:thumbnail ?thumbnail filter(lang(?label) = "pt" && lang(?abstract) = "pt" && lang(?comment) = "pt") filter( ?classe = dbr:Chondrichthyes || ?classe = dbr:Actinopterygii || ?classe = dbr:Osteichthyes || ?classe = dbr:Amphibia || ?classe = dbr:Sauropsida || ?classe = dbr:Reptilia || ?classe = dbr:Aves || ?classe = dbr:Mammalia || ?filo = dbr:Arthropod ) } '
+
 
 app.engine('.hbs', exphbs({
   defaultLayout: 'main',
