@@ -1,6 +1,7 @@
 const path = require('path')
 const express = require('express')
 const exphbs = require('express-handlebars')
+const favicon = require('express-favicon');
 
 const app = express()
 
@@ -8,6 +9,7 @@ const dps = require('dbpedia-sparql-client').default;// npm install dbpedia-spar
 const query = 'select distinct * where { ?animal dbo:kingdom dbr:Animal; dbo:phylum ?filo ; dbo:class ?classe; foaf:name ?nome ; rdfs:label ?label; dbo:abstract ?abstract; rdfs:comment ?comment; foaf:isPrimaryTopicOf ?link_wikipedia; dbo:thumbnail ?thumbnail filter(lang(?label) = "pt" && lang(?abstract) = "pt" && lang(?comment) = "pt") filter( ?classe = dbr:Chondrichthyes || ?classe = dbr:Actinopterygii || ?classe = dbr:Osteichthyes || ?classe = dbr:Amphibia || ?classe = dbr:Sauropsida || ?classe = dbr:Reptilia || ?classe = dbr:Aves || ?classe = dbr:Mammalia || ?filo = dbr:Arthropod ) } '
 var tools = require("./tools.js");
 
+app.use(favicon('favicon.png'));
 app.engine('.hbs', exphbs({
   defaultLayout: 'main',
   extname: '.hbs',
@@ -31,11 +33,11 @@ app.get('/busca', (request, response) => {
     .then(function(r) {
       /* handle success */
       console.log("Sucesso");
-      tools.ReadRankFromDb();
+      let ten_ranked_rows = tools.ReadRankFromDb();
+
       tools.InsertSingleRowInDb("matheus", 500);
 
       response.render('home', {
-        name: "batata",
         busca: 'var query = '+ JSON.stringify(r) + ';',
         alo: r["results"]["bindings"]
       })

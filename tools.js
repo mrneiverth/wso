@@ -21,7 +21,7 @@ module.exports = {
         // console.log("Connected! insertsinglerowindb");
 
         var sql = "INSERT INTO rank (id, nome, points) VALUES (null, '"+ nome + "', " + points + ");";
-        console.log("sql: " + sql);
+        // console.log("sql: " + sql);
         con.query(sql, function (err, result) {
           if (err) throw err;
           console.log("inserted: " + sql);
@@ -38,16 +38,14 @@ module.exports = {
         database: "wso"
       });
 
+      //var sql_select = "SELECT nome, points AS pontos FROM rank ORDER BY pontos DESC LIMIT 10;"
       con.connect(function(err) {
         if (err) throw err;
-        console.log("Connected!");
-
-        var sql = "INSERT INTO rank (id, nome, points) VALUES (null, 'jaca', 37)";
-        con.query(sql, function (err, result) {
+        con.query("SELECT nome, points as pontos FROM rank ORDER BY pontos DESC LIMIT 10", function (err, result, fields) {
           if (err) throw err;
-          console.log("1 record inserted");
+          console.log("ReadRankFromDb: " + result[1].nome + "\n" + result[1].pontos);
+          return result;
         });
       });
     }
-
 }
