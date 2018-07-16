@@ -32,7 +32,8 @@ app.get('/busca', (request, response) => {
       console.log("Sucesso");
       response.render('home', {
         name: "batata",
-        busca: 'var query = '+ JSON.stringify(r) + ';'
+        busca: 'var query = '+ JSON.stringify(r) + ';',
+        alo: r["results"]["bindings"]
       })
     })
     .catch(function(e) {
