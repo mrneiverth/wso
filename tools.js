@@ -6,15 +6,26 @@ module.exports = {
       let str = fs.readFileSync("password_db.txt",'utf8');
       return str;
     },
-    WriteTextFile:function(str){
-      // var fs = require('fs');
-      fs.writeFile("ranking.txt", str, function(err) {
-      if(err) {
-        return console.log(err);
-      }
+    InsertSingleRowInDb:function(nome, points){
+      let str = fs.readFileSync("password_db.txt",'utf8');
+      str = str.substring(0, str.length - 1);
+      var con = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: str,
+        database: "wso"
+      });
 
-      console.log("the file was saved!");
+      con.connect(function(err) {
+        if (err) throw err;
+        // console.log("Connected! insertsinglerowindb");
 
+        var sql = "INSERT INTO rank (id, nome, points) VALUES (null, '"+ nome + "', " + points + ");";
+        console.log("sql: " + sql);
+        con.query(sql, function (err, result) {
+          if (err) throw err;
+          console.log("inserted: " + sql);
+        });
       });
     },
     ReadRankFromDb:function(){

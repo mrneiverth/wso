@@ -32,7 +32,7 @@ app.get('/busca', (request, response) => {
       /* handle success */
       console.log("Sucesso");
       tools.ReadRankFromDb();
-
+      tools.InsertSingleRowInDb("matheus", 500);
 
       response.render('home', {
         name: "batata",
