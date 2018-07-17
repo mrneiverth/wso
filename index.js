@@ -11,12 +11,15 @@ var tools = require("./tools.js");
 
 var admin = require("firebase-admin");
 
-var serviceAccount = require("./serviceAccountKey.json");
+var serviceAccount = require("./myServiceAccountKey.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://webso-6209b.firebaseio.com"
+  databaseURL: "https://wildlife-quiz.firebaseio.com"
 });
+
+var db = admin.firestore();
+
 
 app.use(favicon('favicon.png'));
 app.engine('.hbs', exphbs({
