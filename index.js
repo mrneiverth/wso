@@ -10,7 +10,7 @@ const query = 'select distinct * where { ?animal dbo:kingdom dbr:Animal; dbo:phy
 var tools = require("./tools.js");
 
 var admin = require("firebase-admin");
-var serviceAccount = require("./serviceAccountKey.json");
+var serviceAccount = require("./myServiceAccountKey.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -36,22 +36,19 @@ app.set('views', path.join(__dirname, 'views'))
 
 app.get('/', (request, response) => {
   var usersRef = db.collection('users');
-  var stringifyRanked = '[';
+  var teste = {};
 
   var queryUsers = usersRef.orderBy('pontos', 'desc').limit(10).get()
   .then(snapshot => {
       snapshot.forEach(doc => {
-        console.log(doc.id, '=>', doc.data());
-        stringifyRanked += JSON.stringify([doc.id, doc.data().pontos]);
-        stringifyRanked += ',';
+        teste[doc.id] = doc.data().pontos;
       });
-      stringifyRanked = stringifyRanked.substring(0, stringifyRanked.length - 1);
-      stringifyRanked += ']';
+      console.log(teste);
 
       response.render('home', {
         log_in_route: 'Batata',
         sign_up_route: 'potato',
-        ranking: stringifyRanked,
+        ranking: teste,
         play_route: "/game"
       })
     })

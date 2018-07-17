@@ -8,10 +8,24 @@
 </div>
 
 <div>
-  ranking dos jogadores que mais ponturam
-  {{ranking}}
+  ranking dos jogadores que mais pontuaram
+  <table class="mdl-data-table mdl-js-data-table">
+    <thead>
+      <tr>
+        <th class="mdl-data-table__cell--non-numeric">Nome</th>
+        <th>Pontos</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each ranking}}
+      <tr>
+        <td class="mdl-data-table__cell--non-numeric">{{{@key}}}</td>
+        <td>{{{this}}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 </div>
-
 
 <style>
 body {
