@@ -58,7 +58,12 @@ app.get('/busca', (request, response) => {
       // console.log([escolhidos[ordem[0]], escolhidos[ordem[1]], escolhidos[ordem[2]]]);
       // console.log("/aqui");
       animais = [result[escolhidos[ordem[0]]], result[escolhidos[ordem[1]]], result[escolhidos[ordem[2]]]]
-      animal_correto = animais[Math.floor((Math.random() * 3))];
+      animais[0]["is_correct"] = false;
+      animais[1]["is_correct"] = false;
+      animais[2]["is_correct"] = false;
+      index = Math.floor((Math.random() * 3));
+      animal_correto = animais[index];
+      animais[index]["is_correct"] = true;
       // console.log(animais);
 
 

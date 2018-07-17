@@ -7,41 +7,50 @@
     <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
       <div class="mdl-card mdl-shadow--2dp">
         <div class="mdl-card__media">
-
           <img src="{{thumbnail.value}}" alt="" />
-
         </div>
         <!-- <div class="mdl-card__supporting-text">
-
         </div> -->
         <div class="mdl-card__actions mdl-card--border">
-          <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Voto nesse!</a>
+          {{#if is_correct}}
+            <button id="btn-correto" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Voto nesse!</button>
+          {{else}}
+            <button id="btn-errado-{{@index}}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Voto nesse!</button>
+          {{/if}}
         </div>
       </div>
     </div>
 {{/each}}
 </div>
-<button id="show-dialog" type="button" class="mdl-button">Show Dialog</button>
 
-<dialog class="mdl-dialog">
-  <h4 class="mdl-dialog__title">Allow data collection?</h4>
-  <div class="mdl-dialog__content">
-    <img src="https://i.ytimg.com/vi/Hq-8pZeb0d4/hqdefault.jpg"
-  </div>
-  <div class="mdl-dialog__actions">
-    <button type="button" class="mdl-button close">Okay...</button>
-  </div>
-</dialog>
+{{#each animais}}
+  {{#if is_correct}}
+    <dialog id="dialog-correto" class="mdl-dialog">
+      <h4 class="mdl-dialog__title">Yeap</h4>
+      <div class="mdl-dialog__content">
+        <p>{{abstract.value}}</p>
+        <p>{{comment.value}}</p>
+        <a href="{{link_wikipedia.value}}">Veja mais na Wikipedia(en)</a>
+      </div>
+      <div class="mdl-dialog__actions">
+        <button id="btn-close-{{@index}}" type="button" class="mdl-button close">Próxima questão!</button>
+      </div>
+    </dialog>
+  {{else}}
+    <dialog id="dialog-errado-{{@index}}" class="mdl-dialog">
+      <h4 class="mdl-dialog__title">Nope</h4>
+      <div class="mdl-dialog__content">
+        <img src="https://i.ytimg.com/vi/Hq-8pZeb0d4/hqdefault.jpg"></img>
+      </div>
+      <div class="mdl-dialog__actions">
+        <button id="btn-close-{{@index}}" type="button" class="mdl-button close">Okay...</button>
+      </div>
+    </dialog>
+  {{/if}}
+{{/each}}
+</div>
+<!-- <button id="show-dialog" type="button" class="mdl-button">Show Dialog</button> -->
 
-<dialog class="mdl-dialog">
-  <h4 class="mdl-dialog__title">Allow data collection?</h4>
-  <div class="mdl-dialog__content">
-    <img src="http://img.ibxk.com.br/ns/rexposta/2016/04/27/27041253651000.jpg"></img>
-  </div>
-  <div class="mdl-dialog__actions">
-    <button type="button" class="mdl-button close">Okay...</button>
-  </div>
-</dialog>
 
 <!-- Square card -->
 <!-- <div class="demo-card-square mdl-card mdl-shadow--2dp">
@@ -84,15 +93,39 @@ body {
 </style>
 
 <script>
-var dialog = document.querySelector('dialog');
-var showDialogButton = document.querySelector('#show-dialog');
-if (! dialog.showModal) {
-  dialogPolyfill.registerDialog(dialog);
-}
-showDialogButton.addEventListener('click', function() {
-  dialog.showModal();
-});
-dialog.querySelector('.close').addEventListener('click', function() {
-  dialog.close();
-});
+document.addEventListener('DOMContentLoaded', function() {
+    // alert("Ready!");
+    $("dialog").each(function (index, dialog) {
+      if (! dialog.showModal) {
+        dialogPolyfill.registerDialog(dialog);
+      }
+      if(dialog.id == "dialog-correto"){
+        $("#btn-correto").click(function () { dialog.showModal(); })
+      }
+      else {
+        $("#btn-errado-"+index).click(function () { dialog.showModal(); })
+      }
+      // $(dialog).click(function() {
+      //   console.log(this);
+      //   this.close();
+      // });
+      dialog.querySelector('.close').addEventListener('click', function() {
+        console.log("entrou");
+        dialog.close();
+      });
+    });
+}, false);
+
+
+// var dialog = document.querySelector('dialog');
+// var showDialogButton = document.querySelector('#show-dialog');
+// if (! dialog.showModal) {
+//   dialogPolyfill.registerDialog(dialog);
+// }
+// showDialogButton.addEventListener('click', function() {
+//   dialog.showModal();
+// });
+// dialog.querySelector('.close').addEventListener('click', function() {
+//   dialog.close();
+// });
 </script>
