@@ -74,6 +74,10 @@ body {
   margin-left: 3px;
 }
 
+.mdl-card__media {
+  background-color: #FFFFFF;
+}
+
 </style>
 
 <script>
@@ -101,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
               type: 'POST',
               contentType: 'application/json',
               data: JSON.stringify({"user": 'teste', "certo":true}),
-              success: function(response){console.log("ok no ajax mandando true");}
+              success: function(response){location.reload();}
             });
         }
         else {
@@ -110,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
               type: 'POST',
               contentType: 'application/json',
               data: JSON.stringify({"user": 'teste', "certo":false}),
-              success: function(response){console.log("ok no ajax mandando false");}
+              success: function(response){location.reload();}
             });
         }
         dialog.close();

@@ -113,6 +113,7 @@ app.post('/salvaNoFirebase', (request, response) => {
     });
     //atualiza dados no firebase
     console.log("acertou");
+    return response.status(200).send("top");
   }
   console.log("\n");
 })
