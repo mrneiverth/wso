@@ -5,7 +5,20 @@ module.exports = {
     readYourDbPassword:function(){
       let str = fs.readFileSync("password_db.txt",'utf8');
       return str;
-    }//,
+    },
+    makeRandom:function(size){
+      var set = new Set();
+      var num;
+      for(i = 0; i < 3; i++){
+        num = Math.floor((Math.random() * size));
+        while(set.has(num)) {
+          num = Math.floor((Math.random() * size));
+        }
+        set.add(num);
+      }
+      return [...set]
+    }
+    //,
     // InsertSingleRowInDb:function(nome, points){
     //   let str = fs.readFileSync("password_db.txt",'utf8');
     //   str = str.substring(0, str.length - 1);

@@ -39,20 +39,22 @@ app.get('/busca', (request, response) => {
       // tools.InsertSingleRowInDb("matheus", 500);
       //[/db stuffs]
       var size = r["results"]["bindings"].length;
-      var set = new Set();
-      for(i = 0; i < 3; i++){
-        var num = Math.floor((Math.random() * size));
-        set.add(num);
-        while(set.has(num)) {
-          num = Math.floor((Math.random() * size));
-        }
-      }
-      escolhidos = [...set];
+      var result = r["results"]["bindings"];
+
+      escolhidos = tools.makeRandom(size);
+      ordem = tools.makeRandom(3);
+      // console.log("aqui");
+      // console.log(escolhidos);
+      // console.log(ordem);
+      // console.log([escolhidos[ordem[0]], escolhidos[ordem[1]], escolhidos[ordem[2]]]);
+      // console.log("/aqui");
+      animais = [result[escolhidos[ordem[0]]], result[escolhidos[ordem[1]]], result[escolhidos[ordem[2]]]]
+      console.log(animais);
 
 
       response.render('home', {
         busca: 'var query = '+ JSON.stringify(r) + ';',
-        escolhidos: escolhidos
+        animais: animais
       })
     })
     .catch(function(e) {
