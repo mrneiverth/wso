@@ -29,11 +29,14 @@ app.set('views', path.join(__dirname, 'views'))
 
 app.get('/', (request, response) => {
   response.render('home', {
-    name: 'Batata'
+    log_in_route: 'Batata',
+    sign_up_route: 'potato',
+    ranking: 'nada ainda',
+    play_route: "/game"
   })
 })
 
-app.get('/busca', (request, response) => {
+app.get('/game', (request, response) => {
   var mydata;
   dps.client()
     .query(query)
@@ -67,7 +70,7 @@ app.get('/busca', (request, response) => {
       // console.log(animais);
 
 
-      response.render('home', {
+      response.render('game', {
         // busca: 'var query = '+ JSON.stringify(r) + ';',
         animais: animais,
         correto: animal_correto
