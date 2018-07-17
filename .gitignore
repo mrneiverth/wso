@@ -1,3 +1,6 @@
+#LOCK JSON
+package-lock.json
+password_db.txt
 # Logs
 logs
 *.log
