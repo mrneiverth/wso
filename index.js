@@ -49,12 +49,14 @@ app.get('/busca', (request, response) => {
       // console.log([escolhidos[ordem[0]], escolhidos[ordem[1]], escolhidos[ordem[2]]]);
       // console.log("/aqui");
       animais = [result[escolhidos[ordem[0]]], result[escolhidos[ordem[1]]], result[escolhidos[ordem[2]]]]
-      console.log(animais);
+      animal_correto = animais[Math.floor((Math.random() * 3))];
+      // console.log(animais);
 
 
       response.render('home', {
-        busca: 'var query = '+ JSON.stringify(r) + ';',
-        animais: animais
+        // busca: 'var query = '+ JSON.stringify(r) + ';',
+        animais: animais,
+        correto: animal_correto
       })
     })
     .catch(function(e) {
