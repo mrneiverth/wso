@@ -1,14 +1,9 @@
 <div>
-  <a href="{{log_in_route}}">Fazer login</a>
-  <a href="{{sign_up_route}}">Criar conta</a>
-</div>
 
-<div>
-  <a href="{{play_route}}">Jogar!</a>
 </div>
 
 <center>
-  ranking dos jogadores que mais pontuaram
+  <h4>Ranking dos jogadores que mais pontuaram</h4>
   <table class="mdl-data-table mdl-js-data-table">
     <thead>
       <tr>
@@ -25,10 +20,15 @@
       {{/each}}
     </tbody>
   </table>
+
+  <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" href="{{{play_route}}}">Jogar!</a>
 </center>
 
 <style>
 body {
   background-color: #f7f7f7;
+}
+.mdl-button {
+  margin: 2%;
 }
 </style>
