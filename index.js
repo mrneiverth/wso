@@ -10,8 +10,7 @@ const query = 'select distinct * where { ?animal dbo:kingdom dbr:Animal; dbo:phy
 var tools = require("./tools.js");
 
 var admin = require("firebase-admin");
-
-var serviceAccount = require("./myServiceAccountKey.json");
+var serviceAccount = require("./serviceAccountKey.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -19,7 +18,6 @@ admin.initializeApp({
 });
 
 var db = admin.firestore();
-
 
 app.use(favicon('favicon.png'));
 app.engine('.hbs', exphbs({
@@ -31,12 +29,29 @@ app.set('view engine', '.hbs')
 app.set('views', path.join(__dirname, 'views'))
 
 app.get('/', (request, response) => {
-  response.render('home', {
-    log_in_route: 'Batata',
-    sign_up_route: 'potato',
-    ranking: 'nada ainda',
-    play_route: "/game"
-  })
+  var usersRef = db.collection('users');
+  var stringifyRanked = '[';
+
+  var queryUsers = usersRef.orderBy('pontos', 'desc').limit(10).get()
+  .then(snapshot => {
+      snapshot.forEach(doc => {
+        console.log(doc.id, '=>', doc.data());
+        stringifyRanked += JSON.stringify([doc.id, doc.data().pontos]);
+        stringifyRanked += ',';
+      });
+      stringifyRanked = stringifyRanked.substring(0, stringifyRanked.length - 1);
+      stringifyRanked += ']';
+
+      response.render('home', {
+        log_in_route: 'Batata',
+        sign_up_route: 'potato',
+        ranking: stringifyRanked,
+        play_route: "/game"
+      })
+    })
+    .catch(err => {
+      console.log('Error getting documents', err);
+    });
 })
 
 app.get('/game', (request, response) => {
@@ -48,11 +63,17 @@ app.get('/game', (request, response) => {
     .then(function(r) {
       /* handle success */
       console.log("Sucesso");
+
       var size = r["results"]["bindings"].length;
       var result = r["results"]["bindings"];
 
       escolhidos = tools.makeRandom(size);
       ordem = tools.makeRandom(3);
+      // console.log("aqui");
+      // console.log(escolhidos);
+      // console.log(ordem);
+      // console.log([escolhidos[ordem[0]], escolhidos[ordem[1]], escolhidos[ordem[2]]]);
+      // console.log("/aqui");
       animais = [result[escolhidos[ordem[0]]], result[escolhidos[ordem[1]]], result[escolhidos[ordem[2]]]]
       animais[0]["is_correct"] = false;
       animais[1]["is_correct"] = false;
@@ -60,7 +81,7 @@ app.get('/game', (request, response) => {
       index = Math.floor((Math.random() * 3));
       animal_correto = animais[index];
       animais[index]["is_correct"] = true;
-
+      // console.log(animais);
 
       response.render('game', {
         // busca: 'var query = '+ JSON.stringify(r) + ';',
