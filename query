@@ -42,7 +42,7 @@ const query = 'select * WHERE { ?animal dbo:kingdom dbr:Animal ; foaf:name ?nome
 // const query = 'select * WHERE { ?animal dbo:kingdom dbr:Animal ; foaf:name ?nome ;rdfs:label ?label;dbo:abstract ?abstract;rdfs:comment ?comment;foaf:isPrimaryTopicOf ?link_wikipedia;dbo:thumbnail ?thumbnail filter(lang(?label) = "pt" && lang(?abstract) = "pt" && lang(?comment) = "pt") } limit 100';
 // const query = 'select distinct * WHERE { ?animal dbo:kingdom dbr:Animal ;dbo:genus ?genero;foaf:name ?nome ;rdfs:label ?label;dbo:abstract ?abstract;rdfs:comment ?comment;foaf:isPrimaryTopicOf ?link_wikipedia;dbo:thumbnail ?thumbnail filter(lang(?label) = "pt" && lang(?abstract) = "pt" && lang(?comment) = "pt") } limit 100';
 
-select distinct *
+select distinct * STR(?class) str(?label) str(?abstract) str(?comment) str(?label) str(?link_wikipedia) ?thumbnail
 where {
 ?animal dbo:kingdom dbr:Animal;
 dbo:phylum ?filo ;
