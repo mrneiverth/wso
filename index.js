@@ -38,7 +38,7 @@ app.get('/busca', (request, response) => {
       // console.log("ReadRankFromDb: " + ten_ranked_rows[1].nome + "\n" + ten_ranked_rows[1].pontos);
       // tools.InsertSingleRowInDb("matheus", 500);
       //[/db stuffs]
-      
+
       response.render('home', {
         busca: 'var query = '+ JSON.stringify(r) + ';',
         alo: r["results"]["bindings"]
