@@ -48,21 +48,11 @@ app.get('/game', (request, response) => {
     .then(function(r) {
       /* handle success */
       console.log("Sucesso");
-      //[db stuffs]
-      // let ten_ranked_rows = tools.ReadRankFromDb();
-      // console.log("ReadRankFromDb: " + ten_ranked_rows[1].nome + "\n" + ten_ranked_rows[1].pontos);
-      // tools.InsertSingleRowInDb("matheus", 500);
-      //[/db stuffs]
       var size = r["results"]["bindings"].length;
       var result = r["results"]["bindings"];
 
       escolhidos = tools.makeRandom(size);
       ordem = tools.makeRandom(3);
-      // console.log("aqui");
-      // console.log(escolhidos);
-      // console.log(ordem);
-      // console.log([escolhidos[ordem[0]], escolhidos[ordem[1]], escolhidos[ordem[2]]]);
-      // console.log("/aqui");
       animais = [result[escolhidos[ordem[0]]], result[escolhidos[ordem[1]]], result[escolhidos[ordem[2]]]]
       animais[0]["is_correct"] = false;
       animais[1]["is_correct"] = false;
@@ -70,7 +60,6 @@ app.get('/game', (request, response) => {
       index = Math.floor((Math.random() * 3));
       animal_correto = animais[index];
       animais[index]["is_correct"] = true;
-      // console.log(animais);
 
 
       response.render('game', {
