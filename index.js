@@ -6,7 +6,7 @@ const favicon = require('express-favicon');
 const app = express()
 
 const dps = require('dbpedia-sparql-client').default;// npm install dbpedia-sparql-client
-const query = 'select distinct * where { ?animal dbo:kingdom dbr:Animal; dbo:phylum ?filo ; dbo:class ?classe; foaf:name ?nome ; rdfs:label ?label; dbo:abstract ?abstract; rdfs:comment ?comment; foaf:isPrimaryTopicOf ?link_wikipedia; dbo:thumbnail ?thumbnail filter(lang(?label) = "pt" && lang(?abstract) = "pt" && lang(?comment) = "pt") filter( ?classe = dbr:Chondrichthyes || ?classe = dbr:Actinopterygii || ?classe = dbr:Osteichthyes || ?classe = dbr:Amphibia || ?classe = dbr:Sauropsida || ?classe = dbr:Reptilia || ?classe = dbr:Aves || ?classe = dbr:Mammalia || ?filo = dbr:Arthropod ) } '
+const query = 'select distinct * where { ?animal dbo:kingdom dbr:Animal; dbo:phylum ?filo ; dbo:class ?classe; foaf:name ?nome ; rdfs:label ?label; dbo:abstract ?abstract; rdfs:comment ?comment; foaf:isPrimaryTopicOf ?link_wikipedia; dbo:thumbnail ?thumbnail filter(lang(?label) = "pt" && lang(?abstract) = "pt" && lang(?comment) = "pt") filter( ?classe = dbr:Chondrichthyes || ?classe = dbr:Actinopterygii || ?classe = dbr:Osteichthyes || ?classe = dbr:Amphibia || ?classe = dbr:Sauropsida || ?classe = dbr:Reptilia || ?classe = dbr:Aves || ?classe = dbr:Mammalia || ?filo = dbr:Arthropod ) } order by ?classe';
 var tools = require("./tools.js");
 
 app.use(favicon('favicon.png'));
@@ -41,7 +41,7 @@ app.get('/busca', (request, response) => {
 
       response.render('home', {
         busca: 'var query = '+ JSON.stringify(r) + ';',
-        alo: r["results"]["bindings"]
+        alo: r["results"]["bindings"].slice(0,10)
       })
     })
     .catch(function(e) {
