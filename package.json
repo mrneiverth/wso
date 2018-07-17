@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/mrneiverth/wso#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "dbpedia-sparql-client": "^0.9.8",
     "express": "^4.16.3",
     "express-favicon": "^2.0.1",

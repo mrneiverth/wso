@@ -84,17 +84,35 @@ document.addEventListener('DOMContentLoaded', function() {
         dialogPolyfill.registerDialog(dialog);
       }
       if(dialog.id == "dialog-correto"){
-        $("#btn-correto").click(function () { dialog.showModal(); })
+        $("#btn-correto").click(function () {
+          dialog.showModal();
+         })
       }
       else {
-        $("#btn-errado-"+index).click(function () { dialog.showModal(); })
+        $("#btn-errado-"+index).click(function () {
+          dialog.showModal();
+        })
       }
-      // $(dialog).click(function() {
-      //   console.log(this);
-      //   this.close();
-      // });
       dialog.querySelector('.close').addEventListener('click', function() {
-        console.log("entrou");
+        console.log("entrou no close");
+        if(dialog.id == "dialog-correto"){
+            $.ajax({
+              url: '/salvaNoFirebase',
+              type: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify({"user": 'teste', "certo":true}),
+              success: function(response){console.log("ok no ajax mandando true");}
+            });
+        }
+        else {
+            $.ajax({
+              url: '/salvaNoFirebase',
+              type: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify({"user": 'teste', "certo":false}),
+              success: function(response){console.log("ok no ajax mandando false");}
+            });
+        }
         dialog.close();
       });
     });

@@ -19,6 +19,10 @@ admin.initializeApp({
 
 var db = admin.firestore();
 
+var bodyParser = require('body-parser');
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
 app.use(favicon('favicon.png'));
 app.engine('.hbs', exphbs({
   defaultLayout: 'main',
@@ -27,6 +31,8 @@ app.engine('.hbs', exphbs({
 }))
 app.set('view engine', '.hbs')
 app.set('views', path.join(__dirname, 'views'))
+
+
 
 app.get('/', (request, response) => {
   var usersRef = db.collection('users');
@@ -95,6 +101,18 @@ app.get('/game', (request, response) => {
       console.log(e);
     });
 
+})
+
+app.post('/salvaNoFirebase', (request, response) => {
+  console.log("/salvaNoFirebase node");
+  console.log(request.body);
+  var usuario = request.body.user;
+  var acertou = request.body.certo;
+  if(acertou){
+    //atualiza dados no firebase
+    console.log("acertou");
+  }
+  console.log("\n");
 })
 
 app.listen(8080)
