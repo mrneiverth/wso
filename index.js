@@ -33,10 +33,12 @@ app.get('/busca', (request, response) => {
     .then(function(r) {
       /* handle success */
       console.log("Sucesso");
-      let ten_ranked_rows = tools.ReadRankFromDb();
-
-      tools.InsertSingleRowInDb("matheus", 500);
-
+      //[db stuffs]
+      // let ten_ranked_rows = tools.ReadRankFromDb();
+      // console.log("ReadRankFromDb: " + ten_ranked_rows[1].nome + "\n" + ten_ranked_rows[1].pontos);
+      // tools.InsertSingleRowInDb("matheus", 500);
+      //[/db stuffs]
+      
       response.render('home', {
         busca: 'var query = '+ JSON.stringify(r) + ';',
         alo: r["results"]["bindings"]
