@@ -108,7 +108,12 @@ app.post('/salvaNoFirebase', (request, response) => {
   console.log(request.body);
   var usuario = request.body.user;
   var acertou = request.body.certo;
+  var pontos = 0;
   if(acertou){
+    pontos = pontos+3;
+    var setDoc = db.collection('users').doc(usuario).set({
+      pontos: pontos
+    });
     //atualiza dados no firebase
     console.log("acertou");
   }
